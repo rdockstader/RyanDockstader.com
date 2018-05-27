@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/rdockstader/RyanDockstader.com/issues"
   },
-  "homepage": "https://github.com/rdockstader/RyanDockstader.com#readme"
+  "homepage": "https://github.com/rdockstader/RyanDockstader.com#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3"
+  }
 }
