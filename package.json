@@ -1,0 +1,26 @@
+{
+  "name": "ryandockstader.com",
+  "version": "1.0.0",
+  "description": "Ryan Dockstader Profile/promotion website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdockstader/RyanDockstader.com.git"
+  },
+  "keywords": [
+    "ryan",
+    "dockstader",
+    "profile",
+    "dtech",
+    "media"
+  ],
+  "author": "Ryan Dockstader",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdockstader/RyanDockstader.com/issues"
+  },
+  "homepage": "https://github.com/rdockstader/RyanDockstader.com#readme"
+}
