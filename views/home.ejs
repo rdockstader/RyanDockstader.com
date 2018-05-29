@@ -1,8 +1,197 @@
 <% include partials/header %>
-<section>
-    <div>
-        <h1>The Future Home of</h1>
-        <h2><em>RyanDockstader.com</em></h2>
-    </div>
-</section>
+        <header>
+        <nav>
+            <div class="row">
+                <ul class="main-nav js--main-nav">
+                    <li><a href="#education">Education</a> </li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about-me">About Me</a></li>
+                </ul>
+                <a class="mobile-nav-icon js--nav-icon"><i class="ion-navicon-round"></i> </a>
+            </div>
+        </nav>
+        <div class="hero-text-box">
+            <h1>Ryan Dockstader</h1>
+            <p class="tag-line">Software Developer, Content Creator</p>
+            <a class="btn btn-full js--scroll-to-start" href="#">Tell Me More</a>
+        </div>
+        </header>
+        <section class="section-education js--section-education" id="education">
+            <div class="row">
+                <h2>Education</h2>
+            </div>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <div  class="edu-img">
+                       <img src="/resources/img/pics/code_min.jpg" alt="laptop-min"> 
+                    </div>
+                </div>
+                <div class="edu-text col span-2-of-3">
+                    <div class="edu-box">
+                        <div class="row edu-header">
+                            <h3>Bachelors of Science, Software Engineering &mdash; May 2020</h3>
+                            <h5>Brigham Young University Idaho (Online), Rexburg, Idaho</h5>
+                            <div class="edu-notable-projs">
+                                <h4>Notable Projects</h4>
+                                <ul>
+                                    <li>Built a version of the original Astroids game</li>
+                                    <li>USU GitHub Repo <a href="https://github.com/rdockstader/USU-CS">here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row edu-box">
+                        <div class="edu-header">
+                            <h3>Associates of Science, General Studies &mdash; May 2017</h3>
+                            <h3>Utah State University, Logan, UT</h3>
+                            <div class="edu-notable-projs">
+                                <h4>Notable Projects</h4>
+                                <ul>
+                                    <li>Took 2nd in a class compititon using basic AI</li>
+                                    <li>BYU-I GitHub Repo <a href="https://github.com/rdockstader/BYUI-CS">here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row edu-box">
+                        <div class="edu-header">
+                            <h3>Certifications</h3>
+                            <div class="edu-notable-projs">
+                                <ul>
+                                    <li>CompTIA A+</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-projects">
+            <div class="div-projects">
+                <div class="row">
+                    <h2 id="projects">Projects</h2>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <div class="proj-container">
+                           <a href="#ddpmodal" class="modal-link"><img src="/resources/img/projects/ddp-photo-logo.jpg" alt="dev-dock-photo"></a> 
+                           <div id="ddpmodal" class="modalDialog">
+                            	<div>
+                            		<a href="#close" title="Close" class="close"><i class="ion-close"></i></a>
+                            		<h2>Devin Dockstader Photography</h2>
+                            		<p><strong>Web Server:</strong> Node.js</p>
+                            		<p><strong>Database:</strong> MongoDB via mlab</p>
+                            		<p><strong>File Storage:</strong> AWS S3 Storage</p>
+                            		<p>
+                            		    I built this website for my brother. He was looking for something unique to show of his photography. He has done
+                            		    some web development, but not a ton. Because of this, the most interesting part of this website is the admin portal.
+                            		    I built it from the ground up so that all the content (especially the photos) could be expanded on, removed, collections
+                            		    could be added, etc. It's still a work in progress. The next enhancements that we have planned are mass upload, and
+                            		    a built in photo "minifier".
+                            		</p>
+                            		<p class="text-center"><a class="btn btn-full" href="http://ddp.photos/" target="_BLANK">Show Me</a></p>
+                            	</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="col span-1-of-3">
+                        <div class="proj-container">
+                            <a href="#ytmodal" class="modal-link"><img src="/resources/img/projects/yt.jpg" alt="youtube-logo"></a> 
+                            <div id="ytmodal" class="modalDialog">
+                                <div>
+                            	    <a href="#close" title="Close" class="close"><i class="ion-close"></i></a>
+                            		<h2>dTech Media YouTube</h2>
+                            		<p>
+                            		    I have a passion for sharing knowledge with other people, and YouTube allows me to do that in a pretty
+                            		    effective way. Video is a media type that I'm constantly trying to learn and grow in. My primary reason 
+                            		    for starting this channel is to help others become more familiar with this thing we call technology.
+                            		</p>
+                            		<p class="text-center"><a class="btn btn-full" href="https://youtube.com/dtechmediaYT" target="_BLANK">Lets See the Channel</a></p>
+                            	</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="col span-1-of-3">
+                        <div class="proj-container">
+                            <a href="#wpmodal" class="modal-link"><img src="/resources/img/projects/wp.jpg" alt="wordpress-logo"></a> 
+                            <div id="wpmodal" class="modalDialog">
+                                <div>
+                            	    <a href="#close" title="Close" class="close"><i class="ion-close"></i></a>
+                            		<h2>dTech Media Blog</h2>
+                            		<p>
+                            		    A blog is something that I've always been interested in making. I tried making one on wordpress.com a year or
+                            		    two back, and it just wasn't working for me. So, I bought my own domain (dtech-media.com), purchased the 
+                            		    X theme and have been learning more and more about wordpress ever since. I love creating content that I think
+                            		    can really help someone that's trying to learn something. My goal with this blog is to create a space where
+                            		    people can find reliable, helpful information without having to subscribe to anything. 
+                            		</p>
+                            		<p class="text-center"><a class="btn btn-full" href="http://dtech-media.com" target="_BLANK">Lets See that Content!</a></p>
+                            	</div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-about-me">
+            <div class="div-about-me">
+                <div class="row">
+                    <h2 id="about-me">About Me</h2>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-4">
+                        <div id="headshot-div" class="about-photo-div">
+                            <img src="/resources/img/about/ry-headshot.jpg" alt="ryan-headshot">
+                        </div>
+                    </div>
+                    <div class="col span-2-of-4">
+                        <p>
+                            <strong>Fun Fact:</strong> I created every asset found on this page.
+                        </p>
+                        <p>&nbsp;</p>
+                        <p>
+                            I'm from a small town in south eastern Idaho, called Preston. If you think you've heard of that before
+                            you just might be right! It was the location of the film Napoleon Dynamite. Growing up in Preston
+                            there were a lot of people that grew up on farms, and planned to take over the family farm when
+                            they grew up. However, I wasn't one of those kids. From as far back as I can remember I wanted to be
+                            an engineer. I didn't know what that meant, or how to spell it but I knew it was what I wanted
+                            to be. Somewhere between then and now, I also fell in love with all things technology. From the tech
+                            behind rockets to the CPUs in a home computer I wanted (and still do) to learn about it all.
+                            I have a passion for learning, and creating. If it's something that I love, I will spend as long as it
+                            takes until I know it's the best I can make it. I use that very drive to propel myself forward in learning,
+                            the work place, and every other facet of my life. 
+                        </p>
+                    </div>
+                    <div class="col span-1-of-4">
+                        <div id="pixel-div" class="about-photo-div">
+                            <img src="/resources/img/about/ry-ani.png" alt="ryan-pixel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <div class="row">
+                <div class="col span-1-of-2">
+                    <ul class="footer-nav">
+                        <li><a href="http://dtech-media.com" target="_BLANK">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col span-1-of-2">
+                    <ul class="social-icons">
+                        <li><a href="https://twitter.com/ryanfromdtech" target="_BLANK"><i class="ion-social-twitter"></i></a></li>
+                        <li><a href="https://plus.google.com/+RyanDockstader" target="_BLANK"><i class="ion-social-googleplus"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/ryandockstader/" target="_BLANK"><i class="ion-social-linkedin"></i></a></li>
+                        <li><a href="https://www.youtube.com/dtechmediaYT" target="_BLANK"><i class="ion-social-youtube"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <p>
+                    Copright &copy; 2018 Ryan Dockstader. All rights reserved.
+                </p>
+            </div>
+        </footer>
 <% include partials/footer %>
