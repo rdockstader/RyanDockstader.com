@@ -71,11 +71,6 @@ $(document).ready(function() {
             nav.removeClass('main-nav-expanded')
         }
     });
-    var cw = $('.proj-container').width();
-    $('.proj-container').css({
-        'height': cw/2 + 'px'
-    });
-    
 });
 
 
