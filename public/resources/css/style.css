@@ -196,8 +196,7 @@ input[type=submit]:active {
 }
 
 .btn-full:hover,
-.btn-full:active,
-{
+.btn-full:active {
     border: 1px solid #053dbd;
 }
 
@@ -547,8 +546,7 @@ footer {
 }
 
 .footer-nav li a:hover,
-.footer-nav li a:active,
- {
+.footer-nav li a:active {
     color: #ddd;
 }
 
@@ -608,3 +606,7 @@ footer p {
     opacity: 1;
 }
 
+
+.pb-3 {
+    padding-bottom: 10px;
+}
