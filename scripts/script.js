@@ -1,9 +1,9 @@
 // HELPER FUNCTIONS
-var getMainSection = function() {
+function getMainSection() {
     return document.getElementById('main-section');
 }
 
-var clearMainSection = function() {
+function clearMainSection() {
     var mainSection = getMainSection();
 
     while(mainSection.firstChild) {
@@ -13,6 +13,96 @@ var clearMainSection = function() {
     mainSection.classList = null;
 
     return mainSection;
+}
+
+function getJSON(url, method, isAsync, callback)
+{
+	// Verify there is a URL, if not exit function
+    if(url == null) {
+        console.error('URL CANNOT BE NULL');
+        return;
+    }
+    // Verify there is a callback, if not exit the function
+    if(callback == null) {
+        console.error('CALLBACK CANNOT BE NULL');
+        return;
+    }
+    // default to GET
+    if(method == null) {
+        method = 'GET';
+    }
+    // default to true (false is depreciated)
+    if(isAsync == null) {
+        isAsync = true;
+    }
+    // setup and send request
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function()	
+			{
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    callback(xmlhttp.responseText);
+                } 
+					
+			}
+	xmlhttp.open(method, url, isAsync);
+	xmlhttp.send();
+}
+// MODAL FUNCTIONS
+function closeModal() {
+    document.body.removeChild(this.parentElement);
+}
+
+function createModal() {
+    if(!document.getElementById('modal')) {
+        var modal = document.createElement('div');
+        modal.id = 'modal';
+        modal.classList.add('modal');
+        var closeBtn = document.createElement('button');
+        closeBtn.innerHTML = 'close';
+        closeBtn.classList.add('modal-close-btn');
+        closeBtn.classList.add('btn');
+        closeBtn.classList.add('btn-danger');
+        closeBtn.onclick = closeModal;
+        modal.appendChild(closeBtn);
+        return modal;
+    }
+
+
+    return null;
+}
+
+// WEATHER FUNCTIONS
+function onWeatherIconClick(event) {
+    var modal = createModal();
+    if(modal) {
+        document.body.appendChild(modal);
+    }
+    
+}
+
+function genWeatherMenu() {
+    var navList = document.createElement('ul');
+    navList.classList.add('nav-list');
+    navList.classList.add('nav-list-right');
+    var iconItem = document.createElement('li');
+    var iconClick = document.createElement('a');
+    iconClick.id = 'weather-icon';
+    iconClick.onclick = onWeatherIconClick;
+    var icon = document.createElement('img');
+    icon.classList.add('nav-icon');
+    icon.src = './img/Weather-icon.png';
+    iconClick.appendChild(icon);
+    iconItem.append(iconClick);
+    navList.appendChild(iconItem);
+    getJSON('http://api.openweathermap.org/data/2.5/weather?zip=84321,us&units=imperial&APPID=5e7ba222cda077f67cc1fa067e2a3dfa', null, null, function(data) {
+        weather = JSON.parse(data);
+        var weatherInfo = document.createElement('li');
+        weatherInfo.classList.add('row-end-right');
+        console.log(weather);
+        weatherInfo.innerHTML = weather.name + ": " + weather.weather[0].main + ', Temp: ' + weather.main.temp + '&#xb0; F';
+        navList.appendChild(weatherInfo);
+    } )
+    return navList;
 }
 // NAV FUNCTIONS
 function navItemClick(event) {
@@ -37,7 +127,8 @@ function navItemClick(event) {
 
 function genNavList() {
     var navList = document.createElement('ul');
-    navList.classList.add('main-nav');
+    navList.classList.add('nav-list');
+    navList.classList.add('nav-list-left');
     var navItems = [
         {name: 'Home'},
         {name: 'Education'},
@@ -58,7 +149,9 @@ function genNavList() {
 function GenNav() {
     var nav = document.createElement('nav');
     var wrapperDiv = document.createElement('div');
+    wrapperDiv.classList.add('main-nav');
     wrapperDiv.appendChild(genNavList());
+    wrapperDiv.appendChild(genWeatherMenu());
     nav.appendChild(wrapperDiv);
     
 
