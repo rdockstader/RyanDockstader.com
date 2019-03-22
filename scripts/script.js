@@ -49,7 +49,78 @@ function getJSON(url, method, isAsync, callback)
 }
 // MODAL FUNCTIONS
 function closeModal() {
-    document.body.removeChild(this.parentElement);
+    document.body.removeChild(document.getElementById('modal'));
+}
+
+function submitZip(event) {
+    var newzip = document.getElementById('zip-code').value;
+    if(newzip > 10000 && newzip <= 99999) {
+        closeModal();
+        console.log(newzip);
+    } else {
+        alert('Please enter a valid zip code');
+    }
+    
+}
+
+function createModalForm() {
+    var form = document.createElement('form');
+    // zip code input
+    var zipCodeInputWrapper = document.createElement('div');
+    zipCodeInputWrapper.classList.add('flex-row');
+    var zipCodeInputLabel = document.createElement('label');
+    zipCodeInputLabel.for = 'zip-code';
+    zipCodeInputLabel.innerHTML = 'Zip Code';
+    zipCodeInputLabel.classList.add('flex-col');
+    zipCodeInputLabel.classList.add('span-1-of-2');
+    var zipCodeInput = document.createElement('input');
+    zipCodeInput.id = 'zip-code';
+    zipCodeInput.name = 'zip-code';
+    zipCodeInput.classList.add('flex-col');
+    zipCodeInput.classList.add('span-1-of-2');
+    zipCodeInput.placeholder = '55555';
+    zipCodeInput.type = 'number';
+    zipCodeInputWrapper.appendChild(zipCodeInputLabel);
+    zipCodeInputWrapper.appendChild(zipCodeInput);
+    form.appendChild(zipCodeInputWrapper);
+    // submit button
+    var btnRow = document.createElement('div');
+    btnRow.classList.add('flex-row');
+    var btnCol = document.createElement('div');
+    btnCol.classList.add('flex-col');
+    btnCol.classList.add('span-1-of-1');
+    btnCol.classList.add('flex-align-right');
+    var submitBtn = document.createElement('button');
+    submitBtn.type = 'button';
+    submitBtn.innerHTML = 'Submit';
+    submitBtn.classList.add('btn');
+    submitBtn.classList.add('btn-success');
+    submitBtn.classList.add('flex-align-right');
+    submitBtn.onclick = submitZip;
+    btnCol.appendChild(submitBtn);
+    btnRow.appendChild(btnCol);
+    form.appendChild(btnRow);
+    return form;
+}
+
+function createModalCloseBtn () {
+    var btnRow = document.createElement('div');
+    btnRow.classList.add('flex-row');
+    var btnCol = document.createElement('div');
+    btnCol.classList.add('flex-col');
+    btnCol.classList.add('span-1-of-1');
+    btnCol.classList.add('flex-align-right');
+    var closeBtn = document.createElement('button');
+    closeBtn.innerHTML = 'X';
+    closeBtn.classList.add('modal-close-btn');
+    closeBtn.classList.add('btn');
+    closeBtn.classList.add('btn-danger');
+    closeBtn.classList.add('flex-align-right');
+    closeBtn.onclick = closeModal;
+    btnCol.appendChild(closeBtn);
+    btnRow.appendChild(btnCol);
+
+    return btnRow;
 }
 
 function createModal() {
@@ -57,13 +128,9 @@ function createModal() {
         var modal = document.createElement('div');
         modal.id = 'modal';
         modal.classList.add('modal');
-        var closeBtn = document.createElement('button');
-        closeBtn.innerHTML = 'close';
-        closeBtn.classList.add('modal-close-btn');
-        closeBtn.classList.add('btn');
-        closeBtn.classList.add('btn-danger');
-        closeBtn.onclick = closeModal;
-        modal.appendChild(closeBtn);
+        
+        modal.appendChild(createModalCloseBtn());
+        modal.appendChild(createModalForm());
         return modal;
     }
 
@@ -169,7 +236,7 @@ function genTitle() {
     title.innerHTML = 'Ryan Dockstader';
     var lead = document.createElement('p');
     lead.classList.add('lead');
-    lead.innerHTML = 'Motivated JavaScript, C# developer, and forever learner';
+    lead.innerHTML = 'Motivated JavaScript developer, C# developer, and life long learner';
     titleDiv.appendChild(title);
     titleDiv.appendChild(lead);
     return titleDiv;
