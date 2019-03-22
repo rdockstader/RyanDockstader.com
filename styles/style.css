@@ -17,6 +17,7 @@ input {
     border-radius: 5px;
     border: 1px solid grey;
     height: 25px;
+    box-shadow: grey
 }
 
 /* ------- HEADINGS -------- */
@@ -34,7 +35,7 @@ h1 {
     margin-top: 0;
     margin-bottom: 20px;
     color: #fff;
-    font-size: 400%; 
+    font-size: 500%; 
     word-spacing: 2px;
 }
 
@@ -209,20 +210,6 @@ h2:after {
     animation: backgroundChange 40s infinite;
 }
 
-@keyframes backgroundChange {
-    0% {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero.jpeg);
-        
-    }
-    25% {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero2.jpeg);
-    }
-    50% {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero3.jpeg);
-    }
-    75% {background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero4.jpeg);}
-}
-
 .main-title-wrapper {
     position: absolute;
     width: 1140px;
@@ -237,4 +224,19 @@ h2:after {
 
 .lead {
     color: white;
+    font-size: 150%;
+}
+
+@keyframes backgroundChange {
+    0% {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero.jpeg);
+        
+    }
+    25% {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero2.jpeg);
+    }
+    50% {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero3.jpeg);
+    }
+    75% {background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero4.jpeg);}
 }

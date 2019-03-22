@@ -9,8 +9,8 @@ function clearMainSection() {
     while(mainSection.firstChild) {
         mainSection.removeChild(mainSection.firstChild);
     }
-    mainSection.style = null;
-    mainSection.classList = null;
+    mainSection.style = '';
+    mainSection.classList = '';
 
     return mainSection;
 }
@@ -52,11 +52,28 @@ function closeModal() {
     document.body.removeChild(document.getElementById('modal'));
 }
 
+function regenCurrentPage() {
+    var main = getMainSection();
+    if(main.classList.contains('education')) {
+        genEducation();
+    } else if (main.classList.contains('projects')) {
+        genProjects();
+    } else if (main.classList.contains('aboutMe')) {
+        genAboutMe();
+    } else {
+        genHome();
+    }
+}
+
 function submitZip(event) {
     var newzip = document.getElementById('zip-code').value;
     if(newzip > 10000 && newzip <= 99999) {
         closeModal();
-        console.log(newzip);
+        var weatherData = new Object();
+        weatherData.zipCode = newzip;
+        weatherData.syncDate = null;
+        localStorage.setItem('weatherData', JSON.stringify(weatherData));
+        regenCurrentPage();
     } else {
         alert('Please enter a valid zip code');
     }
@@ -83,6 +100,12 @@ function createModalForm() {
     zipCodeInputWrapper.appendChild(zipCodeInputLabel);
     zipCodeInputWrapper.appendChild(zipCodeInput);
     form.appendChild(zipCodeInputWrapper);
+    // check if zip code is in local storage
+    var weatherDataText = localStorage.getItem('weatherData');
+    if(weatherDataText) {
+        weatherData = JSON.parse(weatherDataText);
+        zipCodeInput.value = weatherData.zipCode;
+    }
     // submit button
     var btnRow = document.createElement('div');
     btnRow.classList.add('flex-row');
@@ -139,6 +162,38 @@ function createModal() {
 }
 
 // WEATHER FUNCTIONS
+function getWeather(cb) {
+    var TEN_MINUTES = 10 * 60 * 1000;
+    var zip = 84321;
+    var now = new Date();
+    var tenMinutesAgo = new Date(now - TEN_MINUTES);
+    var weatherData = new Object();
+    var weatherDataText = localStorage.getItem('weatherData');
+    if(weatherDataText) {
+        weatherData = JSON.parse(weatherDataText);
+        zip = weatherData.zipCode;
+    }
+    console.log('Sync Date: ',
+                weatherData.syncDate,
+                ' Resynced? ',
+                (!weatherData.syncDate || (weatherData.syncDate && weatherData.syncDate < tenMinutesAgo)));
+    if(!weatherData.syncDate || (weatherData.syncDate && weatherData.syncDate < tenMinutesAgo)) {
+        getJSON('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=imperial&APPID=5e7ba222cda077f67cc1fa067e2a3dfa', null, null, function(data) {
+        weather = JSON.parse(data);
+        weatherData.name = weather.name;
+        weatherData.state = weather.weather[0].main;
+        weatherData.temp = weather.main.temp;
+        weatherData.syncDate = now;
+        localStorage.setItem('weatherData', JSON.stringify(weatherData));
+        cb(weatherData);
+        
+    } );
+    } else {
+        cb(weatherData);
+    }
+    
+}
+
 function onWeatherIconClick(event) {
     var modal = createModal();
     if(modal) {
@@ -148,7 +203,9 @@ function onWeatherIconClick(event) {
 }
 
 function genWeatherMenu() {
+    
     var navList = document.createElement('ul');
+    navList.id = 'weather-menu';
     navList.classList.add('nav-list');
     navList.classList.add('nav-list-right');
     var iconItem = document.createElement('li');
@@ -161,21 +218,16 @@ function genWeatherMenu() {
     iconClick.appendChild(icon);
     iconItem.append(iconClick);
     navList.appendChild(iconItem);
-    getJSON('http://api.openweathermap.org/data/2.5/weather?zip=84321,us&units=imperial&APPID=5e7ba222cda077f67cc1fa067e2a3dfa', null, null, function(data) {
-        weather = JSON.parse(data);
+    getWeather(function(data) {
         var weatherInfo = document.createElement('li');
         weatherInfo.classList.add('row-end-right');
-        console.log(weather);
-        weatherInfo.innerHTML = weather.name + ": " + weather.weather[0].main + ', Temp: ' + weather.main.temp + '&#xb0; F';
+        weatherInfo.innerHTML = data.name + ": " + data.state + ', Temp: ' + data.temp + '&#xb0; F';
         navList.appendChild(weatherInfo);
-    } )
+    })
     return navList;
 }
 // NAV FUNCTIONS
 function navItemClick(event) {
-    console.log(this.innerHTML);
-    clearMainSection();
-
     switch(this.innerHTML) {
         case('Education'):
             genEducation();
@@ -214,7 +266,12 @@ function genNavList() {
 }
 
 function GenNav() {
+    var oldnav = document.getElementById('main-nav');
+    if(oldnav) {
+        oldnav.parentNode.removeChild(oldnav);
+    }
     var nav = document.createElement('nav');
+    nav.id = 'main-nav';
     var wrapperDiv = document.createElement('div');
     wrapperDiv.classList.add('main-nav');
     wrapperDiv.appendChild(genNavList());
@@ -236,7 +293,7 @@ function genTitle() {
     title.innerHTML = 'Ryan Dockstader';
     var lead = document.createElement('p');
     lead.classList.add('lead');
-    lead.innerHTML = 'Motivated JavaScript developer, C# developer, and life long learner';
+    lead.innerHTML = 'Motivated JavaScript developer, C# developer, life-long learner';
     titleDiv.appendChild(title);
     titleDiv.appendChild(lead);
     return titleDiv;
@@ -245,28 +302,36 @@ function genTitle() {
 
 // Generates the header section of the web page
 function genHome() {
+    var SCREEN_NAME = 'home'
     var main = getMainSection();
-    main.classList.add('home');
+    clearMainSection();
+    main.classList.add(SCREEN_NAME);
     main.appendChild(GenNav());
     main.appendChild(genTitle());
     
 }
 
 function genEducation() {
+    var SCREEN_NAME = 'education'
     var main = getMainSection();
-    main.classList.add('education');
+    clearMainSection();
+    main.classList.add(SCREEN_NAME);
     main.appendChild(GenNav());
 }
 
 function genProjects() {
+    var SCREEN_NAME = 'projects'
     var main = getMainSection();
-    main.classList.add('projects');
+    clearMainSection();
+    main.classList.add(SCREEN_NAME);
     main.appendChild(GenNav());
 }
 
 function genAboutMe() {
+    var SCREEN_NAME = 'aboutMe'
     var main = getMainSection();
-    main.classList.add('aboutMe');
+    clearMainSection();
+    main.classList.add(SCREEN_NAME);
     main.appendChild(GenNav());
 }
 
