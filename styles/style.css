@@ -40,8 +40,10 @@ hr {
 .responsive-img {
     margin: auto;
     width: 90%;
+}
+
+.img-box-shadow {
     border-radius: 10px;
-    border: 1px solid grey;
     box-shadow: 5px 5px 5px grey;
 }
 

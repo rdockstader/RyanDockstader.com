@@ -333,11 +333,11 @@ function genHome() {
 /***************************************/
 
 // GENERATE EDUCATION NODE
-function generateEducationNode(title, date, tagline, projects, gitHubLink) {
+function generateEducationNode(title, date, tagline, projects, gitHubLink, imgPath) {
     var nodeRow = document.createElement('div');
     nodeRow.classList.add('flex-row');
     var nodeCol = document.createElement('div');
-    nodeCol.classList.add('flex-col', 'span-1-of-1', 'notable-projects');
+    nodeCol.classList.add('flex-col', 'span-4-of-5', 'notable-projects');
     var nodeTitle = document.createElement('h3');
     nodeTitle.innerHTML = title + ' &mdash; ' + date;
     var nodeTagline = document.createElement('h5');
@@ -363,7 +363,16 @@ function generateEducationNode(title, date, tagline, projects, gitHubLink) {
     nodeCol.appendChild(projectsTitle);
     nodeCol.appendChild(nodeProjects);
     nodeCol.appendChild(gitLink);
+
+    var nodeImgCol = document.createElement('div');
+    nodeImgCol.classList.add('flex-col', 'span-1-of-5');
+    var schoolLogo = document.createElement('img');
+    schoolLogo.classList.add('responsive-img');
+    schoolLogo.src = imgPath;
+    nodeImgCol.appendChild(schoolLogo);
+
     nodeRow.appendChild(nodeCol);
+    nodeRow.appendChild(nodeImgCol);
     return nodeRow;
 }
 // GENERATE CERTS NODE
@@ -432,7 +441,8 @@ function genEducationNodes() {
                 "Developed an android application with a team of developers",
                 "Worked with a large team to review requirements and create a development plan for a iOS app"
             ],
-            gitHubLink: "https://github.com/rdockstader/BYUI-CS"
+            gitHubLink: "https://github.com/rdockstader/BYUI-CS",
+            imgPath: "./img/BYU-Idaho.png"
         },
         {
             title: "ASSOCIATES OF SCIENCE, GENERAL STUDIES",
@@ -442,11 +452,12 @@ function genEducationNodes() {
                 "Took 2nd in a class compititon using basic AI",
                 "Built a foundation of coding experience in C++"
             ],
-            gitHubLink: "https://github.com/rdockstader/USU-CS"
+            gitHubLink: "https://github.com/rdockstader/USU-CS",
+            imgPath: "./img/usu.png"
         }
     ];
     nodes.forEach(node => {
-        nodesCol.appendChild(generateEducationNode(node.title, node.date, node.tagline, node.projects, node.gitHubLink));
+        nodesCol.appendChild(generateEducationNode(node.title, node.date, node.tagline, node.projects, node.gitHubLink, node.imgPath));
         nodesCol.appendChild(document.createElement('hr'));
     })
     var certs = ['CompTIA A+'];
@@ -461,7 +472,7 @@ function genEducationImg() {
     var imgCol = document.createElement('div');
     imgCol.classList.add('flex-col', 'span-1-of-1', 'img-wrapper');
     var img = document.createElement('img');
-    img.classList.add('responsive-img');
+    img.classList.add('responsive-img', 'img-box-shadow');
     img.src = './img/hero2.jpeg';
     imgCol.appendChild(img);
     imgRow.appendChild(imgCol);
