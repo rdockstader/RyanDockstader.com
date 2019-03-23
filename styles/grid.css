@@ -25,11 +25,35 @@
     width: 33.333%;
 }
 
+.span-2-of-3 {
+    width: 66.666%;
+}
+
 .span-1-of-4 {
     width: 25%;
 }
 
+.span-2-of-4 {
+    width: 50%;
+}
+
+.span-3-of-4 {
+    width: 75%;
+}
+
 .span-1-of-5 {
     width: 20%;
+}
+
+.span-2-of-5 {
+    width: 40%;
+}
+
+.span-3-of-5 {
+    width: 60%;
+}
+
+.span-4-of-5 {
+    width: 80%;
 }
 

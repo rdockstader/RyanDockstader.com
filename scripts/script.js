@@ -1,18 +1,22 @@
+/***************************************/
+/**************ALL PAGES****************/
+/***************************************/
 // HELPER FUNCTIONS
 function getMainSection() {
     return document.getElementById('main-section');
 }
 
-function clearMainSection() {
+function clearMainSection(cb) {
     var mainSection = getMainSection();
-
-    while(mainSection.firstChild) {
-        mainSection.removeChild(mainSection.firstChild);
-    }
-    mainSection.style = '';
-    mainSection.classList = '';
-
-    return mainSection;
+    mainSection.style.opacity = 0;
+    setTimeout(function() {
+        while(mainSection.firstChild) {
+            mainSection.removeChild(mainSection.firstChild);
+        }
+        mainSection.style = '';
+        mainSection.classList = '';
+        cb();
+    }, 300);
 }
 
 function getJSON(url, method, isAsync, callback)
@@ -47,6 +51,20 @@ function getJSON(url, method, isAsync, callback)
 	xmlhttp.open(method, url, isAsync);
 	xmlhttp.send();
 }
+
+function genPageTitle(titleText) {
+    var headerRow = document.createElement('div');
+    headerRow.classList.add('flex-row');
+    var headerCol = document.createElement('div');
+    headerCol.classList.add('flex-col', 'span-1-of-1', 'text-centered');
+    var title = document.createElement('h2');
+    title.innerHTML = titleText;
+    headerCol.appendChild(title);
+    headerRow.appendChild(headerCol);
+
+    return headerRow;
+}
+
 // MODAL FUNCTIONS
 function closeModal() {
     document.body.removeChild(document.getElementById('modal'));
@@ -73,7 +91,8 @@ function submitZip(event) {
         weatherData.zipCode = newzip;
         weatherData.syncDate = null;
         localStorage.setItem('weatherData', JSON.stringify(weatherData));
-        regenCurrentPage();
+        //regenCurrentPage();
+        genNav();
     } else {
         alert('Please enter a valid zip code');
     }
@@ -262,10 +281,12 @@ function genNavList() {
         navItem.appendChild(navBtn);
         navList.appendChild(navItem);
     })
+
     return navList;
 }
 
-function GenNav() {
+function genNav() {
+    console.log('called');
     var oldnav = document.getElementById('main-nav');
     if(oldnav) {
         oldnav.parentNode.removeChild(oldnav);
@@ -277,13 +298,13 @@ function GenNav() {
     wrapperDiv.appendChild(genNavList());
     wrapperDiv.appendChild(genWeatherMenu());
     nav.appendChild(wrapperDiv);
-    
 
-
-    return nav;
+    document.body.insertBefore(nav, document.body.firstChild);
 }
-
-// Generates the title within the header section
+/***************************************/
+/**************HOME PAGE****************/
+/***************************************/
+// GENERATE THE TITLE DIV
 function genTitle() {
     var titleDiv = document.createElement('div');
     titleDiv.id = 'title-div';
@@ -298,41 +319,198 @@ function genTitle() {
     titleDiv.appendChild(lead);
     return titleDiv;
 }
-// PAGE FUNCTIONS
-
-// Generates the header section of the web page
+// GENERATE THE HOME PAGE
 function genHome() {
     var SCREEN_NAME = 'home'
     var main = getMainSection();
-    clearMainSection();
-    main.classList.add(SCREEN_NAME);
-    main.appendChild(GenNav());
+    clearMainSection(function() {
+        main.classList.add(SCREEN_NAME);
     main.appendChild(genTitle());
-    
+    });
 }
+/***************************************/
+/************EDUCATION PAGE*************/
+/***************************************/
 
+// GENERATE EDUCATION NODE
+function generateEducationNode(title, date, tagline, projects, gitHubLink) {
+    var nodeRow = document.createElement('div');
+    nodeRow.classList.add('flex-row');
+    var nodeCol = document.createElement('div');
+    nodeCol.classList.add('flex-col', 'span-1-of-1', 'notable-projects');
+    var nodeTitle = document.createElement('h3');
+    nodeTitle.innerHTML = title + ' &mdash; ' + date;
+    var nodeTagline = document.createElement('h5');
+    nodeTagline.innerHTML = tagline;
+    var projectsTitle = document.createElement('h4');
+    projectsTitle.innerHTML = 'Notable Projects';
+    var nodeProjects = document.createElement('ul');
+    projects.forEach(projectText => {
+        var project = document.createElement('li');
+        project.innerHTML = projectText;
+        nodeProjects.appendChild(project);
+    })
+    var gitLink = document.createElement('p');
+    gitLink.innerHTML = 'Checkout my code on GitHub ';
+    var link = document.createElement('a');
+    link.target = "_BLANK";
+    link.href = gitHubLink;
+    link.innerHTML = 'here';
+    gitLink.appendChild(link);
+
+    nodeCol.appendChild(nodeTitle);
+    nodeCol.appendChild(nodeTagline);
+    nodeCol.appendChild(projectsTitle);
+    nodeCol.appendChild(nodeProjects);
+    nodeCol.appendChild(gitLink);
+    nodeRow.appendChild(nodeCol);
+    return nodeRow;
+}
+// GENERATE CERTS NODE
+function generateCertNode(certs) {
+    var certsRowMain = document.createElement('div');
+    certsRowMain.classList.add('flex-row');
+
+    var certsColMain = document.createElement('div');
+    certsColMain.classList.add('flex-col', 'span-1-of-1');
+    certsRowMain.appendChild(certsColMain);
+
+    var certsTitle = document.createElement('h3');
+    certsTitle.innerHTML = 'Certifications';
+    certsColMain.appendChild(certsTitle);
+
+    var certsRow = document.createElement('div');
+    certsRow.classList.add('flex-row');
+    certsColMain.appendChild(certsRow);
+
+    var certsCol1 = document.createElement('div');
+    certsCol1.classList.add('flex-col', 'span-1-of-3');
+    var certsCol1List = document.createElement('ul');
+    certsCol1.appendChild(certsCol1List);
+    certsRow.appendChild(certsCol1);
+
+    var certsCol2 = document.createElement('div');
+    certsCol2.classList.add('flex-col', 'span-1-of-3');
+    var certsCol2List = document.createElement('ul');
+    certsCol2.appendChild(certsCol2List);
+    certsRow.appendChild(certsCol2);
+
+    var certsCol3 = document.createElement('div');
+    certsCol3.classList.add('flex-col', 'span-1-of-3');
+    var certsCol3List = document.createElement('ul');
+    certsCol3.appendChild(certsCol3List);
+    certsRow.appendChild(certsCol3);
+    
+    var index = 1;
+    certs.forEach(cert => {
+        var listItem = document.createElement('li');
+        listItem.innerHTML = cert;
+        if(index % 2) {
+            certsCol1List.appendChild(listItem);
+        } else if (index % 3) {
+            certsCol2List.appendChild(listItem);
+        } else {
+            certsCol3List.appendChild(listItem);
+        }
+        index = index + 1;
+    })
+    return certsRowMain;
+}
+// GENERATE EDUCATION NODES
+function genEducationNodes() {
+    var nodesRow = document.createElement('div');
+    nodesRow.classList.add('flex-row');
+    var nodesCol = document.createElement('div');
+    nodesCol.classList.add('flex-col', 'span-1-of-1');
+    var nodes = [
+        {
+            title: "BACHELORS OF SCIENCE, SOFTWARE ENGINEERING",
+            date: "MAY 2020",
+            tagline: "BRIGHAM YOUNG UNIVERSITY IDAHO (ONLINE), REXBURG, IDAHO",
+            projects: [
+                "Built a version of the original Astroids game",
+                "Developed an android application with a team of developers",
+                "Worked with a large team to review requirements and create a development plan for a iOS app"
+            ],
+            gitHubLink: "https://github.com/rdockstader/BYUI-CS"
+        },
+        {
+            title: "ASSOCIATES OF SCIENCE, GENERAL STUDIES",
+            date: "MAY 2017",
+            tagline: "UTAH STATE UNIVERSITY, LOGAN, UT",
+            projects: [
+                "Took 2nd in a class compititon using basic AI",
+                "Built a foundation of coding experience in C++"
+            ],
+            gitHubLink: "https://github.com/rdockstader/USU-CS"
+        }
+    ];
+    nodes.forEach(node => {
+        nodesCol.appendChild(generateEducationNode(node.title, node.date, node.tagline, node.projects, node.gitHubLink));
+        nodesCol.appendChild(document.createElement('hr'));
+    })
+    var certs = ['CompTIA A+'];
+    nodesCol.appendChild(generateCertNode(certs));
+    nodesRow.appendChild(nodesCol);
+    return nodesRow;
+}
+// GENERATE IMAGE NODE
+function genEducationImg() {
+    var imgRow = document.createElement('div');
+    imgRow.classList.add('flex-row', 'pt-3');
+    var imgCol = document.createElement('div');
+    imgCol.classList.add('flex-col', 'span-1-of-1', 'img-wrapper');
+    var img = document.createElement('img');
+    img.classList.add('responsive-img');
+    img.src = './img/hero2.jpeg';
+    imgCol.appendChild(img);
+    imgRow.appendChild(imgCol);
+
+    return imgRow;
+}
+// GENERATE THE EDUCATION PAGE
 function genEducation() {
     var SCREEN_NAME = 'education'
     var main = getMainSection();
-    clearMainSection();
-    main.classList.add(SCREEN_NAME);
-    main.appendChild(GenNav());
+    clearMainSection(function() {
+        main.classList.add('page', SCREEN_NAME);
+        main.appendChild(genPageTitle('Education'));
+        var eduRow = document.createElement('div');
+        eduRow.classList.add('flex-row');
+        var eduCol1 = document.createElement('div');
+        eduCol1.classList.add('flex-col', 'span-2-of-5');
+        eduCol1.appendChild(genEducationImg());
+        var eduCol2 = document.createElement('div');
+        eduCol2.classList.add('flex-col', 'span-3-of-5');
+        eduCol2.appendChild(genEducationNodes());
+        eduRow.appendChild(eduCol1);
+        eduRow.appendChild(eduCol2);
+        main.appendChild(eduRow);
+    });
 }
-
+/***************************************/
+/************PROJECTS PAGE**************/
+/***************************************/
 function genProjects() {
     var SCREEN_NAME = 'projects'
     var main = getMainSection();
-    clearMainSection();
-    main.classList.add(SCREEN_NAME);
-    main.appendChild(GenNav());
+    clearMainSection(function() {
+        main.classList.add('page', SCREEN_NAME);
+        main.appendChild(genPageTitle('Projects'));
+    });
+    
 }
-
+/***************************************/
+/************ABOUT ME PAGE**************/
+/***************************************/
 function genAboutMe() {
     var SCREEN_NAME = 'aboutMe'
     var main = getMainSection();
-    clearMainSection();
-    main.classList.add(SCREEN_NAME);
-    main.appendChild(GenNav());
+    clearMainSection(function() {
+        main.classList.add('page', SCREEN_NAME);
+        main.appendChild(genPageTitle('About Me'));
+    });
 }
 
 genHome();
+genNav();
