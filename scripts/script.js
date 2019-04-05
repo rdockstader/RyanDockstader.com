@@ -499,27 +499,203 @@ function genEducation() {
         main.appendChild(eduRow);
     });
 }
-/***************************************/
+/************************************************/
 /************PROJECTS PAGE**************/
-/***************************************/
+/***********************************************/
+function createStackItem(itemName, item) {
+    var itemEle = document.createElement('li');
+    itemEle.innerHTML = '<strong>' + itemName + ' </strong> : ' + item;
+
+    return itemEle;
+}
+
+function genProjectDiv(project) {
+    var projRow = document.createElement('div');
+    projRow.classList.add('flex-row');
+    var projCol = document.createElement('div');
+    projCol.classList.add('flex-col', 'span-1-of-1');
+    projRow.appendChild(projCol);
+    // title row
+    var titleRow = document.createElement('div');
+    titleRow.classList.add('flex-row');
+    var titleCol = document.createElement('div');
+    titleCol.classList.add('flex-col', 'span-1-of-1');
+    titleRow.appendChild(titleCol);
+    var title = document.createElement('h3');
+    title.classList.add('text-centered');
+    title.innerHTML = project.title;
+    titleCol.appendChild(title);
+    projCol.appendChild(titleRow);
+    // Description
+    var descRow = document.createElement('div');
+    descRow.classList.add('flex-row');
+    var descCol = document.createElement('div');
+    descCol.classList.add('flex-col', 'span-1-of-1');
+    descRow.appendChild(descCol);
+    var desc = document.createElement('p');
+    desc.innerHTML = project.desc;
+    descCol.appendChild(desc);
+    // stack info
+    var stackList = document.createElement('ul');
+    stackList.appendChild(createStackItem('Back end', project.backend));
+    stackList.appendChild(createStackItem('Database', project.database));
+    stackList.appendChild(createStackItem('Front end', project.frontend));
+    descCol.appendChild(stackList);
+    projCol.appendChild(descRow);
+    // view info
+    var viewRow = document.createElement('div');
+    viewRow.classList.add('flex-row');
+    var viewCol = document.createElement('div');
+    viewCol.classList.add('flex-col', 'span-1-of-1');
+    viewRow.appendChild(viewCol);
+    if(project.gitLink) {
+        var linkInfo = document.createElement('p');
+        linkInfo.innerHTML = 'Check out this projects code on ';
+        var link = document.createElement('a');
+        link.href = project.gitLink;
+        link.target = '_BLANK';
+        link.innerHTML = 'Github';
+        linkInfo.appendChild(link);
+        viewCol.appendChild(linkInfo);
+    }
+    if(project.link) {
+        var linkInfo = document.createElement('p');
+        linkInfo.innerHTML = 'Check out this projects on the web, ';
+        var link = document.createElement('a');
+        link.href = project.link;
+        link.target = '_BLANK';
+        link.innerHTML = 'here';
+        linkInfo.appendChild(link);
+        viewCol.appendChild(linkInfo);
+    }
+    projCol.appendChild(viewRow);
+    return projRow;
+}
+
+function genProjectDivs() {
+    var projects = [
+        {
+            "title": "Devin Dockstader Photography",
+            "desc": "This is a photography site, built to showcase the work done by a photographer" + 
+            ", and allow people to easily see the pricing. This was eventually going to include " + 
+            "options for clients to login and see their photos, and select their favorites, and then download them.",
+            "backend": "Node.js server, using express to serve the API",
+            "database": "MongoDB",
+            "frontend": "EJS",
+            "gitLink": "https://github.com/rdockstader/DevDockPhoto"
+        },
+        {
+            "title": "Go Track Simple",
+            "desc": "A simple calorie tracker Single Page Application, built with the MEAN stack. " + 
+            "This was done for a class, and the requirement was to learn something new.  " + 
+            "So, I decided to learn more about angular, and the angular materials package.",
+            "backend": "Node.js server, using express to serve the API",
+            "database": "MongoDB",
+            "frontend": "Angular 7",
+            "gitLink": "https://github.com/rdockstader/GoTrackSimple",
+            "link": "http://www.gotracksimple.com/"
+        },
+        {
+            "title": "Ryan Dockstader Portolio Site",
+            "desc": "A website to show off my favorite work, and skills. " + 
+            "I really wanted to have some fun with this one, so I decided to build it entirely in   " + 
+            "HTML, CSS, and JavaScript without any external Libraries. Feel free to click around the site! " +
+            "I built it using primary JavaScript, so you shouldn't have any browser reloads. Also, feel free to " +
+            "click the weather icon in the nav bar and set the zip to wherever you are, to load your own weather.",
+            "backend": "No backend",
+            "database": "No Database",
+            "frontend": "HTML/CSS/JavaScript",
+            "gitLink": "https://github.com/rdockstader/RyanDockstader.com"
+        }
+    ];
+    // Generate primary row/col
+    var projRow = document.createElement('div');
+    projRow.classList.add('flex-row');
+    var projCol = document.createElement('div');
+    projCol.classList.add('flex-col', 'span-3-of-5');
+    var spacer = document.createElement('div');
+    spacer.classList.add('flex-col', 'span-1-of-5');
+    projRow.appendChild(spacer);
+    projRow.appendChild(projCol);
+    projects.forEach(project => {
+        projCol.appendChild(genProjectDiv(project));
+    })
+
+    return projRow;
+}
+
 function genProjects() {
     var SCREEN_NAME = 'projects'
     var main = getMainSection();
+
     clearMainSection(function() {
         main.classList.add('page', SCREEN_NAME);
         main.appendChild(genPageTitle('Projects'));
+        main.appendChild(genProjectDivs());
     });
-    
 }
 /***************************************/
 /************ABOUT ME PAGE**************/
 /***************************************/
+function genAboutMeImage(imgPath, alt) {
+    var imgCol = document.createElement('div');
+    imgCol.classList.add('flex-col', 'span-1-of-5'); 
+    var img = document.createElement('img');
+    img.src = imgPath;
+    img.alt = alt;
+    img.classList.add('responsive-img', 'img-box-shadow');
+    imgCol.appendChild(img);
+    return imgCol;
+}
+
+function genAboutMeSummary() {
+    var paragraphs = [
+        `I'm from a small town in south eastern Idaho, called Preston. If you think you've heard of that before
+        you just might be right! It was the location of the film Napoleon Dynamite. Growing up in Preston
+        there were a lot of people that grew up on farms, and planned to take over the family farm when
+        they grew up. However, I wasn't one of those kids. From as far back as I can remember I wanted to be
+        an engineer. I didn't know what that meant, or how to spell it but I knew it was what I wanted
+        to be. Somewhere between then and now, I also fell in love with all things technology. From the tech
+        behind rockets to the CPUs in a home computer I wanted (and still do) to learn about it all.
+        I have a passion for learning, and creating. If it's something that I love, I will spend as long as it
+        takes until I know it's the best I can make it. I use that very drive to propel myself forward in learning,
+        the work place, and every other facet of my life. `,
+        `I love working with code. Primarily, I've worked in JavaScript, with some experience with C#. I love both 
+        languages, and would really like to work in them more throughout my career as a software engineer. I also 
+        enjoy running my code in the cloud, particuarly AWS. They have many technologies that I am fascinated with, 
+        and as such I have worked with in my spare time, such as CloudFront, S3, Elastic Beanstalk, Route 53, Amazon
+        Certificate Manager, Elastic Load Balancers, and setting up EC2 instances.`,
+        `I enjoy spending the free time that I have with my family, or learning something new on Udemy. I believe that as a 
+        software engineer, I will be in for a lifetime of learning since technologies are changing so fast, and that is something
+        that I look forward to. I love learning, and discovering new ways to accomplish things (especially if the new way is 
+        an improvement on the old)`,
+        `Thanks for stopping by my site. If you want any more information about me, or questions for me feel free to shoot me
+        an email at ryanldockstader@SpeechGrammarList.com. Thanks again for dropping by!`
+    ];
+
+    var summaryCol = document.createElement('div');
+    summaryCol.classList.add('flex-col', 'span-3-of-5');
+    paragraphs.forEach(paragraph => {
+        var summary  = document.createElement('p');
+        summary.classList.add('pl-3', 'pr-3');
+        summary.innerHTML = paragraph;
+        summaryCol.appendChild(summary);
+    });
+    return summaryCol;
+}
+
 function genAboutMe() {
     var SCREEN_NAME = 'aboutMe'
     var main = getMainSection();
     clearMainSection(function() {
         main.classList.add('page', SCREEN_NAME);
         main.appendChild(genPageTitle('About Me'));
+        var aboutMeSection = document.createElement('div');
+        aboutMeSection.classList.add('flex-row');
+        main.appendChild(aboutMeSection);
+        aboutMeSection.appendChild(genAboutMeImage('./img/ry.jpg', 'headshot'));
+        aboutMeSection.appendChild(genAboutMeSummary());
+        aboutMeSection.appendChild(genAboutMeImage('./img/8-bit.png', '8-bit Ryan'));
     });
 }
 

@@ -53,6 +53,14 @@ hr {
     padding-top: 20px;
 }
 
+.pl-3 {
+    padding-left: 20px;
+}
+
+.pr-3 {
+    padding-right: 20px;
+}
+
 /* ------- HEADINGS -------- */
 h1,
 h2,
@@ -155,7 +163,7 @@ h2:after {
 
 /* ------- TEXT ALIGNMENT -------- */
 .text-centered {
-    margin: inherit auto inherit auto;
+    margin: auto;
 }
 
 /*****************/
