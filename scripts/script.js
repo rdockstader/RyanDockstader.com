@@ -106,7 +106,7 @@ function submitZip(event) {
 }
 
 function createModalForm() {
-    var form = document.createElement('form');
+    var form = document.createElement('div');
     // zip code input
     var zipCodeInputWrapper = document.createElement('div');
     zipCodeInputWrapper.classList.add('flex-row');
@@ -145,6 +145,15 @@ function createModalForm() {
     submitBtn.classList.add('btn-success');
     submitBtn.classList.add('flex-align-right');
     submitBtn.onclick = submitZip;
+    zipCodeInput.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Trigger the button element with a click
+          submitBtn.click();
+        }
+      });
     btnCol.appendChild(submitBtn);
     btnRow.appendChild(btnCol);
     form.appendChild(btnRow);
@@ -332,7 +341,6 @@ function genNavList() {
 }
 
 function genNav() {
-    console.log('called');
     var oldnav = document.getElementById('main-nav');
     if(oldnav) {
         oldnav.parentNode.removeChild(oldnav);
