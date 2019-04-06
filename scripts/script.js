@@ -67,7 +67,12 @@ function genPageTitle(titleText) {
 
 // MODAL FUNCTIONS
 function closeModal() {
-    document.body.removeChild(document.getElementById('modal'));
+    var modal = document.getElementById('modal');
+    modal.classList.add('fade-out');
+    setTimeout(function() {
+        document.body.removeChild(modal);
+    }, 200);
+    
 }
 
 function regenCurrentPage() {
@@ -93,6 +98,7 @@ function submitZip(event) {
         localStorage.setItem('weatherData', JSON.stringify(weatherData));
         //regenCurrentPage();
         genNav();
+        showSnackBar('Zip Saved Successfully', 3000);
     } else {
         alert('Please enter a valid zip code');
     }
@@ -180,6 +186,46 @@ function createModal() {
     return null;
 }
 
+// SNACKBAR FUNCTION
+function removeSnackBar(snackBar, delay) {
+    setTimeout(function() {
+        document.body.removeChild(snackBar);
+    }, delay);
+}
+
+function genSnackBar(message) {
+    var snackBar = document.createElement('div');
+    snackBar.id = 'snackbar';
+    snackBar.classList.add('snack-bar', 'snack-bar-success');
+
+    var snackBarRow = document.createElement('div');
+    snackBarRow.classList.add('snack-bar-row', 'flex-row');
+    snackBar.appendChild(snackBarRow)
+
+    var snackBarCol = document.createElement('div');
+    snackBarCol.classList.add('flex-col', 'span-1-of-1');
+    snackBarRow.appendChild(snackBarCol);
+    
+    var snackBarMessage = document.createElement('p');
+    snackBarMessage.innerHTML = message;
+    snackBarMessage.classList.add('snack-bar-message', 'text-centered');
+    snackBarCol.appendChild(snackBarMessage);
+    snackBar.style.opacity = 1;
+
+    return snackBar;
+}
+
+function showSnackBar(message, durationInMilliseconds) {
+    var snackBar = genSnackBar(message);
+    if(snackBar) {
+        document.body.appendChild(snackBar);
+        setTimeout(function() {
+            snackBar.classList.add('bounceOutAnimation');
+            removeSnackBar(snackBar, 1000);
+        }, durationInMilliseconds)
+    }
+}
+
 // WEATHER FUNCTIONS
 function getWeather(cb) {
     var TEN_MINUTES = 10 * 60 * 1000;
@@ -197,7 +243,7 @@ function getWeather(cb) {
                 ' Resynced? ',
                 (!weatherData.syncDate || (weatherData.syncDate && weatherData.syncDate < tenMinutesAgo)));
     if(!weatherData.syncDate || (weatherData.syncDate && weatherData.syncDate < tenMinutesAgo)) {
-        getJSON('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=imperial&APPID=5e7ba222cda077f67cc1fa067e2a3dfa', null, null, function(data) {
+        getJSON('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=imperial&APPID=5e7ba222cda077f67cc1fa067e2a3dfa', null, null, function(data) {
         weather = JSON.parse(data);
         weatherData.name = weather.name;
         weatherData.state = weather.weather[0].main;
@@ -325,7 +371,7 @@ function genHome() {
     var main = getMainSection();
     clearMainSection(function() {
         main.classList.add(SCREEN_NAME);
-    main.appendChild(genTitle());
+        main.appendChild(genTitle());
     });
 }
 /***************************************/

@@ -226,6 +226,50 @@ h2:after {
     margin: 10px 15px 0 40px !important;
 }
 
+/*********************/
+/***SNACKBAR STYLES***/
+/*********************/
+
+.snack-bar {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    bottom: 0;
+    left: 0;
+    min-width: 15%; /* Full width */
+    height: 40px; /* Full height */
+    border-radius: 5px;
+    margin-left: 42.5%;
+    margin-bottom: 10px;
+    animation: fadein 1s;
+}
+
+
+.snack-bar-default {
+    border: 1px solid black;
+    color: grey;
+}
+
+.snack-bar-success {
+    background-color: #53A451;
+    color: white;
+    border: 1px solid rgb(53, 107, 52);
+}
+
+.snack-bar-row {
+    margin-top: 10px !important;
+}
+
+.snack-bar-message {
+    margin: auto;
+}
+
+.bounceOutAnimation {
+    animation: bounceOut 1s ease-in;
+    animation-fill-mode: forward;
+}
+
+
+
 /******************/
 /***MODAL STYLES***/
 /******************/
@@ -243,6 +287,7 @@ h2:after {
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
+    animation: fadein 1s;
 
     /* for IE */
   box-shadow: 0 0 0 1000px rgba(0,0,0,.8);
@@ -253,6 +298,10 @@ h2:after {
 
 .modal-close-btn {
     width: 25px;
+}
+
+.fade-out {
+    animation: fadeout 0.25s ease-out;
 }
 
 /**********************/
@@ -288,6 +337,22 @@ h2:after {
     font-size: 150%;
 }
 
+
+/**********************/
+/***EDUCATION STYLES***/
+/**********************/
+
+.notable-projects h4 {
+    margin: 10px;
+}
+.notable-projects ul {
+    margin-top: 0;
+}
+
+/*****************/
+/***ANNIMATIONS***/
+/*****************/
+
 @keyframes backgroundChange {
     0% {
         background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero.jpeg);
@@ -302,20 +367,45 @@ h2:after {
     75% {background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/hero4.jpeg);}
 }
 
-/**********************/
-/***EDUCATION STYLES***/
-/**********************/
-
-.notable-projects h4 {
-    margin: 10px;
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
-.notable-projects ul {
-    margin-top: 0;
-}
-/**********************/
-/****PROJECT STYLES****/
-/**********************/
 
-/*********************/
-/***ABOUT ME STYLES***/
-/*********************/
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+@keyframes bounceOut {
+    0% {
+        transform: translateY(0%);
+    }
+    5% {
+        transform: translateY(1%);
+    }
+    10% {
+        transform: translateY(-1%);
+    }
+    15% {
+        transform: translateY(3%);
+    }
+    20% {
+        transform: translateY(-2%);
+    }
+    25% {
+        transform: translateY(5%);
+    }
+    50% {
+        opacity: 0.75;
+    }
+    75% {
+        transform: translateY(100%);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(100%);
+        transform: opacity(0);
+        opacity: 0;
+    }
+}
